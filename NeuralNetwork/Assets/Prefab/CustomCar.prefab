@@ -52,7 +52,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.4
-  m_Height: 2.6
+  m_Height: 2.3
   m_Direction: 2
   m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!1 &1178625223500895259
@@ -149,6 +149,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2961281832662101867}
   - {fileID: 713422200720650228}
   - {fileID: 2971011209784723523}
   - {fileID: 8244484624982485897}
@@ -205,10 +206,12 @@ MonoBehaviour:
   horizontalInput: 0
   verticalInput: 0
   isDrifting: 0
-  maxSteering: 45
-  steeringLerp: 20
+  centerOfMass: {fileID: 2961281832662101867}
+  maxSteering: 60
+  steeringLerp: 35
   driftingForce: 10
-  torqueStrengh: 0.001
+  torqueStrengh: 0.0005
+  torqueStrenghDrifting: 0.0003
   antiTorque:
     serializedVersion: 2
     m_Curve:
@@ -281,20 +284,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: -0.0475
-      outSlope: -0.0475
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 20
-      value: 0.05
-      inSlope: -0.007059573
-      outSlope: -0.007059573
+      inSlope: -0.16627353
+      outSlope: -0.16627353
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.118518546
+      inWeight: 0
+      outWeight: 0.011111111
+    - serializedVersion: 3
+      time: 0.29260182
+      value: 0.56685185
+      inSlope: -0.004589555
+      outSlope: -0.004589555
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.12701783
+    - serializedVersion: 3
+      time: 30
+      value: 0.5
+      inSlope: 0.0019293637
+      outSlope: 0.0019293637
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.12078973
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -391,7 +403,7 @@ MonoBehaviour:
   - {fileID: 8036908055748608914}
   - {fileID: 5607607293865404041}
   - {fileID: 7251965768746490639}
-  suspensionLenght: 0.45
+  suspensionLenght: 0.6
   wheels:
   - {fileID: 3020538396313405437}
   - {fileID: 6258573591741005680}
@@ -402,7 +414,7 @@ MonoBehaviour:
     m_Bits: 51
   wheelRadius: 0.2
   suspensionStabilisator: 2
-  suspensionForceApplied: 1
+  suspensionForceApplied: 1.2
 --- !u!114 &620398953533194356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,6 +512,38 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0, z: 0.78}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6089591446234730070}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9102952186802470608
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2961281832662101867}
+  m_Layer: 0
+  m_Name: CenterOfMass
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2961281832662101867
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9102952186802470608}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.000000081460335, y: -0.000000037748944, z: 2.4051916e-15,
+    w: 1}
+  m_LocalPosition: {x: 0, y: -0.116, z: -0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

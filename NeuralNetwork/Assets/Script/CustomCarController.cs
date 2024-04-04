@@ -11,6 +11,8 @@ public class CustomCarController : MonoBehaviour
     public float horizontalInput;
     public float verticalInput;
     public bool isDrifting;
+    
+    [SerializeField] private Transform centerOfMass;
 
     private float steering;
     [SerializeField] private float maxSteering = 45;
@@ -18,6 +20,7 @@ public class CustomCarController : MonoBehaviour
     [SerializeField] private float driftingForce = 4;
 
     [SerializeField] private float torqueStrengh = 0.001f;
+    [SerializeField] private float torqueStrenghDrifting = 0.001f;
     [SerializeField] private AnimationCurve antiTorque;
     [SerializeField] private AnimationCurve torqueByVelocity;
     [SerializeField] private AnimationCurve driftBySpeed;
@@ -38,6 +41,7 @@ public class CustomCarController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.centerOfMass = centerOfMass.localPosition;
     }
     
     void Update()
@@ -62,12 +66,11 @@ public class CustomCarController : MonoBehaviour
         steering = math.lerp(steering, horizontalInput * maxSteering, steeringLerp * Time.deltaTime);
         steeringDirection = Quaternion.AngleAxis(steering, Vector3.up) * transform.forward;
     }
-
-    private float rotateDiff;
+    
     private void RotateVehicule()
     {
-        rotateDiff = Vector3.SignedAngle(transform.forward, steeringDirection, Vector3.up); 
-        rb.AddTorque(0,steering * torqueStrengh * torqueByVelocity.Evaluate(localvelocity.z),0);
+        if(isDrifting)rb.AddTorque(0,steering * torqueStrenghDrifting * torqueByVelocity.Evaluate(localvelocity.z),0);
+        else rb.AddTorque(0,steering * torqueStrengh * torqueByVelocity.Evaluate(localvelocity.z),0);
         rb.AddTorque(0,-rb.angularVelocity.y * antiTorque.Evaluate(math.abs(steering)),0);
     }
     
@@ -82,9 +85,9 @@ public class CustomCarController : MonoBehaviour
     {
         if (isDrifting)
         {
-            antiDriftForce = Vector3.Dot(Vector3.Cross(transform.forward, Vector3.up), rb.velocity) *
-                             (-Vector3.Cross(transform.forward, Vector3.up) / driftingForce);
-            rb.AddForce(antiDriftForce * driftBySpeed.Evaluate(localvelocity.z));
+            antiDriftForce = (Vector3.Dot(Vector3.Cross(transform.forward, Vector3.up), rb.velocity) *
+                             (-Vector3.Cross(transform.forward, Vector3.up))) / driftingForce;
+            rb.AddForce(antiDriftForce * driftBySpeed.Evaluate(localvelocity.z ));
         }
         else
         {
