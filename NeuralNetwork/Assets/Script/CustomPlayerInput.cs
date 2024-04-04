@@ -10,5 +10,7 @@ public class CustomPlayerInput : MonoBehaviour
     {
         _carController.horizontalInput = Input.GetAxis("Horizontal") ;
         _carController.verticalInput = Input.GetAxis("Vertical");
+
+        _carController.isDrifting = Input.GetKey(KeyCode.Space);    
     }
 }
