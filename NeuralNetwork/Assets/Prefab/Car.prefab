@@ -548,6 +548,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69f732b26550c7c4dbc9d53f5fcd5746, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  net:
+    layers: 06000000060000000600000002000000
+  fitness: 0
+  rayRange: 5
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  _carController: {fileID: 4769029252849923292}
+  rb: {fileID: 5302402907589698912}
+  totalCheckpointDist: 0
+  nextCheckpoint: {fileID: 0}
+  nextCheckpointDist: 0
+  firstMat: {fileID: 2100000, guid: 8837dd9af6b2b38438a998466eb5973a, type: 2}
+  defaulttMat: {fileID: 2100000, guid: b9ca2df4170491b4792f4423d44329eb, type: 2}
+  mutatedMat: {fileID: 2100000, guid: 3896f30c39f1fa942bf9bbe424c8c133, type: 2}
 --- !u!114 &4769029252849923292
 MonoBehaviour:
   m_ObjectHideFlags: 0

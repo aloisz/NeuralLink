@@ -25,8 +25,15 @@ public class Agent : MonoBehaviour
     Vector3 transformForward;
     Vector3 transformRight;
 
+    private MeshRenderer _meshRenderer;
+    [Space]
+    [SerializeField] private Material firstMat;
+    [SerializeField] private Material defaulttMat;
+    [SerializeField] private Material mutatedMat;
     private void Start()
     {
+        _meshRenderer = GetComponent<MeshRenderer>();
+        
         setUpPos = Vector3.up * 0.02f;
         transformForward = transform.forward;
         transformRight = transform.right;
@@ -99,5 +106,29 @@ public class Agent : MonoBehaviour
     {
         distanceTraveled = totalCheckpointDist +
                            (nextCheckpointDist - (nextCheckpoint.position - transform.position).magnitude);
+
+        if (fitness < distanceTraveled) fitness = distanceTraveled;
     }
+
+    public void CheckpointReached(Transform nextCheckpoint)
+    {
+        totalCheckpointDist += nextCheckpointDist;
+        this.nextCheckpoint = nextCheckpoint;
+        nextCheckpointDist = (nextCheckpoint.position - transform.position).magnitude;
+    }
+
+    public void SetFirstMat()
+    {
+        _meshRenderer.material = firstMat;
+    }
+    
+    public void SetDefaultMat()
+    {
+        _meshRenderer.material = defaulttMat;
+    }
+    public void SetMutatedMat()
+    {
+        _meshRenderer.material = mutatedMat;
+    }
+    
 }
