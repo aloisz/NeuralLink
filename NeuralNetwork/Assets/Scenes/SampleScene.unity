@@ -1467,7 +1467,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0250e79b0a9272845b01bd6c551a94c9,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1518,6 +1518,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Modular Track
+      objectReference: {fileID: 0}
+    - target: {fileID: 4259472185438381092, guid: 621d5f4010959284c98704a300275889,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4259472185438381093, guid: 621d5f4010959284c98704a300275889,
         type: 3}
@@ -1597,15 +1602,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1397557607442929772, guid: eed300d1927457549a7f0f93fd219cb9,
+        type: 3}
+      propertyPath: driftBySpeed.m_Curve.Array.data[1].time
+      value: 0.3666818
+      objectReference: {fileID: 0}
+    - target: {fileID: 1397557607442929772, guid: eed300d1927457549a7f0f93fd219cb9,
+        type: 3}
+      propertyPath: driftBySpeed.m_Curve.Array.data[1].value
+      value: 0.56331563
+      objectReference: {fileID: 0}
     - target: {fileID: 6089591446234730070, guid: eed300d1927457549a7f0f93fd219cb9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.6
+      value: -0.76
       objectReference: {fileID: 0}
     - target: {fileID: 6089591446234730070, guid: eed300d1927457549a7f0f93fd219cb9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.03
+      value: 2.96
       objectReference: {fileID: 0}
     - target: {fileID: 6089591446234730070, guid: eed300d1927457549a7f0f93fd219cb9,
         type: 3}
