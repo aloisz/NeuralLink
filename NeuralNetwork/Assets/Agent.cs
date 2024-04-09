@@ -25,18 +25,20 @@ public class Agent : MonoBehaviour
     Vector3 transformForward;
     Vector3 transformRight;
 
-    private MeshRenderer _meshRenderer;
+    [SerializeField]private MeshRenderer _meshRenderer;
     [Space]
     [SerializeField] private Material firstMat;
     [SerializeField] private Material defaulttMat;
     [SerializeField] private Material mutatedMat;
     private void Start()
     {
-        _meshRenderer = GetComponent<MeshRenderer>();
+        //_meshRenderer = GetComponent<MeshRenderer>();
         
         setUpPos = Vector3.up * 0.02f;
         transformForward = transform.forward;
         transformRight = transform.right;
+        
+        IsTouched(false);
     }
 
     public void ResetAgent()
@@ -52,6 +54,10 @@ public class Agent : MonoBehaviour
         totalCheckpointDist = 0;
         nextCheckpoint = CheckpointManager.Instance.firstCheckpoint;
         nextCheckpointDist = (nextCheckpoint.position - transform.position).magnitude;
+
+        isGoingWrongWay = 0;
+        HowFar = 0;
+        isTouched = 0;
     }
 
     private void FixedUpdate()
@@ -70,15 +76,15 @@ public class Agent : MonoBehaviour
         var transformRight = transform.right;*/
         
         // Front
-        inputs[0] = RaySensor(pos + setUpPos, transformForward, 4f);
+        inputs[0] = RaySensor(pos + setUpPos, transform.forward, 4f);
         
         // Sides
-        inputs[1] = RaySensor(pos + setUpPos, transformRight, 1.5f);
-        inputs[2] = RaySensor(pos + setUpPos, -transformRight, 1.5f);
+        inputs[1] = RaySensor(pos + setUpPos, transform.right, 1.5f);
+        inputs[2] = RaySensor(pos + setUpPos, -transform.right, 1.5f);
         
         // Diagonals
-        inputs[3] = RaySensor(pos + setUpPos, transformForward + transformRight, 2f);
-        inputs[4] = RaySensor(pos + setUpPos, transformForward + -transformRight, 2f);
+        inputs[3] = RaySensor(pos + setUpPos, transform.forward + transform.right, 2f);
+        inputs[4] = RaySensor(pos + setUpPos, transform.forward + -transform.right, 2f);
 
         inputs[5] = 1;
     }
@@ -89,10 +95,18 @@ public class Agent : MonoBehaviour
         if (Physics.Raycast(origin, dir, out hit, rayRange * lenght, layerMask))
         {
             float value = 1 - hit.distance / (rayRange * lenght);
-            Debug.DrawRay(origin, dir * (rayRange * lenght), Color.Lerp(Color.red, Color.green, value));
+            Debug.DrawRay(origin, dir * hit.distance, Color.Lerp(Color.red, Color.green, value));
             return value;
         }
-        else return 0;
+        else
+        {
+            if (Physics.Raycast(origin, dir, out hit, rayRange * lenght, layerMask))
+            {
+                float value = 1 - hit.distance / (rayRange * lenght);
+                Debug.DrawRay(origin, dir * hit.distance, Color.Lerp(Color.red, Color.red, value));
+            }
+            return 0;
+        }
     }
 
     private void OutputUpdate()
@@ -102,12 +116,40 @@ public class Agent : MonoBehaviour
         _carController.verticalInput = net.neurons[^1][1];
     }
 
+    [SerializeField] float isGoingWrongWay;
+    [SerializeField] float HowFar;
     private void FitnessUpdate()
     {
         distanceTraveled = totalCheckpointDist +
                            (nextCheckpointDist - (nextCheckpoint.position - transform.position).magnitude);
 
-        if (fitness < distanceTraveled) fitness = distanceTraveled;
+        isGoingWrongWay = nextCheckpointDist - (nextCheckpoint.position - transform.position).magnitude;
+        if (fitness < distanceTraveled) HowFar = distanceTraveled;
+        
+        fitness = isGoingWrongWay + HowFar + isTouched;
+    }
+
+    [SerializeField] float isTouched;
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.transform.GetComponent<Collider>() != null)
+        {
+            IsTouched(true);
+        }
+    }
+    
+    private void OnCollisionExit(Collision other)
+    {
+        if (other.transform.GetComponent<Collider>() != null)
+        {
+            IsTouched(false);
+        }
+    }
+
+    private void IsTouched(bool touching)
+    {
+        if(touching) isTouched = -15;
+        else isTouched = +15;
     }
 
     public void CheckpointReached(Transform nextCheckpoint)

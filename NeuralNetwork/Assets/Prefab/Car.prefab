@@ -518,6 +518,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 6308539929743214493}
   m_SourcePrefab: {fileID: 100100000, guid: 252a7a44f1fb89041bb1444cd7ecf6d5, type: 3}
+--- !u!23 &2412246191111146761 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 252a7a44f1fb89041bb1444cd7ecf6d5,
+    type: 3}
+  m_PrefabInstance: {fileID: 3943904780293411213}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3544660552614147686 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 252a7a44f1fb89041bb1444cd7ecf6d5,
@@ -560,6 +566,7 @@ MonoBehaviour:
   totalCheckpointDist: 0
   nextCheckpoint: {fileID: 0}
   nextCheckpointDist: 0
+  _meshRenderer: {fileID: 2412246191111146761}
   firstMat: {fileID: 2100000, guid: 8837dd9af6b2b38438a998466eb5973a, type: 2}
   defaulttMat: {fileID: 2100000, guid: b9ca2df4170491b4792f4423d44329eb, type: 2}
   mutatedMat: {fileID: 2100000, guid: 3896f30c39f1fa942bf9bbe424c8c133, type: 2}
@@ -576,7 +583,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSteerAngle: 42
-  motorForce: 800
+  motorForce: 500
   wheelFrontLeftCollider: {fileID: 1577692092581063187}
   wheelFrontRightCollider: {fileID: 2097309318902460574}
   wheelBackLeftCollider: {fileID: 3126634133510978289}

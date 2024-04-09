@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 [System.Serializable]
@@ -30,7 +31,7 @@ public class NeuralNetwork
 
     private void InitNeurons()
     {
-        neurons = new float[layers[x]][]; // number of collun
+        neurons = new float[layers.Length][]; // number of collun
         for (x = 0; x < layers.Length; x++)
         {
             neurons[x] = new float[layers[x]]; // depth of the collun
@@ -39,14 +40,14 @@ public class NeuralNetwork
 
     private void InitAxons()
     {
-        axons = new float[layers[x]][][];
-        for (x = 0; x < layers.Length; x++)
+        axons = new float[layers.Length-1][][];
+        for (x = 0; x < layers.Length-1; x++)
         {
             axons[x] = new float[layers[x]][];
-            for (y = 0; y < axons[x].Length; y++)
+            for (y = 0; y < layers[x]; y++)
             {
                 axons[x][y] = new float [layers[x+1]];
-                for (z = 0; z < axons[x][y].Length; z++)
+                for (z = 0; z < layers[x+1]; z++)
                 {
                     axons[x][y][z] = Random.Range(-1f,1f);
                 }
@@ -77,7 +78,6 @@ public class NeuralNetwork
 
     public void CopyNet(NeuralNetwork netCopy)
     {
-        axons = new float[netCopy.axons.Length][][];
         for (x = 0; x < netCopy.axons.Length; x++)
         {
             for (y = 0; y < netCopy.axons[x].Length; y++)
