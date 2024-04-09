@@ -3905,7 +3905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28802cd58351296479833bc80f287439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  populationSize: 1
+  populationSize: 100
   trainingDuration: 10
   trainingDurationByFitness:
     serializedVersion: 2

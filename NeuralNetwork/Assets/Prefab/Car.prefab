@@ -570,6 +570,11 @@ MonoBehaviour:
   firstMat: {fileID: 2100000, guid: 8837dd9af6b2b38438a998466eb5973a, type: 2}
   defaulttMat: {fileID: 2100000, guid: b9ca2df4170491b4792f4423d44329eb, type: 2}
   mutatedMat: {fileID: 2100000, guid: 3896f30c39f1fa942bf9bbe424c8c133, type: 2}
+  isGoingWrongWay: 0
+  isTouched: 0
+  checkPoints: 0
+  baseTime: 50
+  RemainingTime: 5
 --- !u!114 &4769029252849923292
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -56,8 +56,10 @@ public class Agent : MonoBehaviour
         nextCheckpointDist = (nextCheckpoint.position - transform.position).magnitude;
 
         isGoingWrongWay = 0;
-        HowFar = 0;
         isTouched = 0;
+        checkPoints = 0;
+        IsTouched(false);
+        RemainingTime = baseTime;
     }
 
     private void FixedUpdate()
@@ -117,16 +119,17 @@ public class Agent : MonoBehaviour
     }
 
     [SerializeField] float isGoingWrongWay;
-    [SerializeField] float HowFar;
     private void FitnessUpdate()
     {
         distanceTraveled = totalCheckpointDist +
                            (nextCheckpointDist - (nextCheckpoint.position - transform.position).magnitude);
 
         isGoingWrongWay = nextCheckpointDist - (nextCheckpoint.position - transform.position).magnitude;
-        if (fitness < distanceTraveled) HowFar = distanceTraveled;
+        //if (fitness < distanceTraveled) fitness = distanceTraveled;
         
-        fitness = isGoingWrongWay + HowFar + isTouched;
+        RemainingTime -= (Time.fixedDeltaTime % 60) * 10;
+        
+        fitness = isGoingWrongWay + isTouched + checkPoints + RemainingTime;
     }
 
     [SerializeField] float isTouched;
@@ -140,15 +143,12 @@ public class Agent : MonoBehaviour
     
     private void OnCollisionExit(Collision other)
     {
-        if (other.transform.GetComponent<Collider>() != null)
-        {
-            IsTouched(false);
-        }
+        IsTouched(false);
     }
 
     private void IsTouched(bool touching)
     {
-        if(touching) isTouched = -15;
+        if(touching) isTouched = -50;
         else isTouched = +15;
     }
 
@@ -172,5 +172,17 @@ public class Agent : MonoBehaviour
     {
         _meshRenderer.material = mutatedMat;
     }
-    
+
+    [SerializeField] private float checkPoints;
+    public float AddScoreByPassingCheckpoint(float points)
+    {
+        return this.checkPoints += points;
+    }
+
+    [SerializeField] private float baseTime = 5;
+    [SerializeField] private float RemainingTime = 5;
+    public void ResetTimer()
+    {
+        RemainingTime = baseTime;
+    }
 }
